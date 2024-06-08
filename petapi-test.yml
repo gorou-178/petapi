@@ -1,0 +1,16 @@
+desc: petapi
+runners:
+  req: http://localhost:8080
+steps:
+- req:
+    /pet/123:
+      get:
+        headers:
+          Accept: application/json
+          Api_key: abcdefg
+        body: null
+  test: |
+    current.res.status == 200
+    && current.res.headers["Content-Type"][0] == "application/json"
+    && "Date" in current.res.headers
+    && compare(current.res.body, {"category":{"id":100,"name":"dog"},"id":100,"name":"dog","photoUrls":[],"status":"available","tags":[{"id":200,"name":"pet"}]})
